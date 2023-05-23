@@ -1,24 +1,23 @@
-import Slider from '@mui/material/Slider';
-import { styled } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/organisms/Header/Header';
+import Footer from './components/atoms/Footer/Footer';
+import LoginPage from './components/pages/LoginPage/LoginPage';
+import DashboardPage from './components/pages/DashboardPage/DashboardPage';
+import routes from './routing/routes';
+import PrivateRoutes from './routing/PrivateRoutes';
 
-const CustomizedSlider = styled(Slider)`
-  color: #20b2aa;
-
-  :hover {
-    color: #2e8b57;
-  }
-`;
-
-const App = () => {
-  const lol = '123';
-  // comment
-
-  return (
-    <div>
-      <h1>Test</h1>
-      <CustomizedSlider defaultValue={30} />
-    </div>
-  );
-};
+const App = () => (
+  <CssBaseline>
+    <Header />
+    <Routes>
+      <Route element={<PrivateRoutes />}>
+        <Route path={routes.dashboard} element={<DashboardPage />} />
+      </Route>
+      <Route path={routes.login} element={<LoginPage />} />
+    </Routes>
+    <Footer />
+  </CssBaseline>
+);
 
 export default App;
