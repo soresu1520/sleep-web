@@ -5,15 +5,15 @@ import * as Styled from './LoginTemplate.styled';
 
 const LoginTemplate = ({ children }: PropsWithChildren) => (
   <Styled.MainBox>
-    <Styled.LoginBox>
+    <Styled.ContentBox>
       <Styled.ImageBox>
-        <img src={graphic} alt="A man in a bed" width={450} />
+        <Styled.Image src={graphic} alt="A man in a bed" />
         <Link href="https://www.vecteezy.com/free-vector/sleep" underline="none" color="secondary">
           Grafika od Vecteezy
         </Link>
       </Styled.ImageBox>
       {children}
-    </Styled.LoginBox>
+    </Styled.ContentBox>
   </Styled.MainBox>
 );
 

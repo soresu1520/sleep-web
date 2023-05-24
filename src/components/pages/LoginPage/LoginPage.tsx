@@ -6,6 +6,7 @@ import LoginTemplate from '../../templates/LoginTemplate/LoginTemplate';
 import { useAuth } from '../../../contexts/authContext';
 import LoginFormValues from '../../../types/formTypes';
 import routes from '../../../routing/routes';
+import { checkIfDoctor } from '../../../firebase/firestoreUtils';
 
 const LoginPage = () => {
   const { logIn } = useAuth();
@@ -14,9 +15,14 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (formData: LoginFormValues) => {
     try {
-      await logIn(formData.email, formData.password);
-      setError(false);
-      navigate(routes.dashboard);
+      const ifDoctor = await checkIfDoctor(formData.email);
+      if (ifDoctor) {
+        await logIn(formData.email, formData.password);
+        setError(false);
+        navigate(routes.dashboard);
+      } else {
+        setError(true);
+      }
     } catch {
       setError(true);
     }

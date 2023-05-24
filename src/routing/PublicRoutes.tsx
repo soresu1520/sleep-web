@@ -3,18 +3,18 @@ import routes from './routes';
 import { useAuth } from '../contexts/authContext';
 import Spinner from '../components/atoms/Spinner/Spinner';
 
-const PrivateRoutes = () => {
+const PublicRoutes = () => {
   const { currentUser, loading } = useAuth();
 
   if (loading) {
     return <Spinner />;
   }
 
-  if (currentUser) {
+  if (!currentUser) {
     return <Outlet />;
   }
 
-  return <Navigate to={routes.login} />;
+  return <Navigate to={routes.dashboard} />;
 };
 
-export default PrivateRoutes;
+export default PublicRoutes;

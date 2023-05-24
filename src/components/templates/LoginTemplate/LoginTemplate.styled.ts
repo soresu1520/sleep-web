@@ -8,7 +8,7 @@ export const MainBox = styled(Box)({
   transform: 'translate(-50%,-50%)',
 });
 
-export const LoginBox = styled(Box)({
+export const ContentBox = styled(Box)({
   alignItems: 'center',
   display: 'flex',
   gap: '5rem',
@@ -18,6 +18,11 @@ export const ImageBox = styled(Box)({
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
+});
+
+export const Image = styled('img')({
+  height: '24rem',
+  width: 'auto',
 });
 
 export default MainBox;

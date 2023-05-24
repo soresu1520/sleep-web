@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material';
 
-// we'll see if the MuiCssBaseline is needed
 const theme = createTheme({
   palette: {
     primary: {
@@ -21,6 +20,8 @@ const theme = createTheme({
     MuiButton: {
       defaultProps: {
         color: 'secondary',
+        disableElevation: true,
+        variant: 'contained',
       },
       styleOverrides: {
         root: {

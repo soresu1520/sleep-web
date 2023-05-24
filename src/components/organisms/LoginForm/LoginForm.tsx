@@ -44,7 +44,7 @@ const LoginForm = ({ onSubmit, error }: LoginFormProps) => {
           helperText={errors?.password?.message?.toString()}
         />
         {error && <ErrorMessage msg="Nieprawidłowy login lub hasło" />}
-        <Button type="submit" variant="contained" size="large" fullWidth disableElevation>
+        <Button type="submit" size="large" fullWidth>
           Zaloguj się
         </Button>
       </Styled.FormBox>

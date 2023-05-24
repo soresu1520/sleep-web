@@ -19,18 +19,19 @@ type AuthContextType = {
   resetPassword: (email: string) => Promise<void>;
   updateUserPassword: (email: string) => Promise<void> | null;
   getUser: () => User | null;
+  loading: boolean;
 };
 
 const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        setCurrentUser(user);
-      }
+      setCurrentUser(user);
+      setLoading(false);
     });
 
     return unsubscribe;
@@ -59,6 +60,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     resetPassword,
     updateUserPassword,
     getUser,
+    loading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
