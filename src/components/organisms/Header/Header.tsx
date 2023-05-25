@@ -8,12 +8,14 @@ const Header = () => {
 
   return (
     <nav>
-      <Styled.WhiteAppBar position="static">
+      <Styled.WhiteAppBar position="sticky">
         <Styled.FlexToolbar isLoggedIn={!!currentUser}>
-          <NightsStayIcon sx={{ fontSize: '2.8rem' }} color="primary" />
-          <Typography variant="h4" color="primary">
-            Sleep lab
-          </Typography>
+          <Styled.LogoBox>
+            <NightsStayIcon sx={{ fontSize: '2.8rem' }} color="primary" />
+            <Typography variant="h4" color="primary">
+              Sleep lab
+            </Typography>
+          </Styled.LogoBox>
         </Styled.FlexToolbar>
       </Styled.WhiteAppBar>
     </nav>

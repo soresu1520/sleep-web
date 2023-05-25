@@ -17,6 +17,15 @@ const theme = createTheme({
     fontFamily: ['Poppins', 'sans-serif'].join(','),
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        '#root': {
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         color: 'secondary',

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../organisms/LoginForm/LoginForm';
 import LoginTemplate from '../../templates/LoginTemplate/LoginTemplate';
 import { useAuth } from '../../../contexts/authContext';
-import LoginFormValues from '../../../types/formTypes';
+import { LoginFormValues } from '../../../types/formTypes';
 import routes from '../../../routing/routes';
 import { checkIfDoctor } from '../../../firebase/firestoreUtils';
 

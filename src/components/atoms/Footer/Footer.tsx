@@ -2,11 +2,11 @@ import { Typography } from '@mui/material';
 import * as Styled from './Footer.styled';
 
 const Footer = () => (
-  <footer>
-    <Styled.FooterBox>
+  <Styled.FooterBox>
+    <Styled.CopyrightBox>
       <Typography>@ Roksana Rachel {new Date().getFullYear()}</Typography>
-    </Styled.FooterBox>
-  </footer>
+    </Styled.CopyrightBox>
+  </Styled.FooterBox>
 );
 
 export default Footer;

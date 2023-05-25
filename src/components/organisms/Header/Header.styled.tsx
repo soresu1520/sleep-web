@@ -1,6 +1,7 @@
 import { styled } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
 
 type ToolbarProps = {
   isLoggedIn: boolean;
@@ -17,3 +18,7 @@ export const FlexToolbar = styled(Toolbar, {
   display: 'flex',
   justifyContent: isLoggedIn ? 'space-between' : 'center',
 }));
+
+export const LogoBox = styled(Box)({
+  display: 'flex',
+});

@@ -17,5 +17,3 @@ export const FormBox = styled(Box)({
   gap: '1rem',
   width: '100%',
 });
-
-export default {};

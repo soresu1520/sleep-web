@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ThemeProvider } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 import theme from './theme/muiTheme';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -13,9 +14,11 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <SnackbarProvider autoHideDuration={3000}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </AuthProvider>
   </React.StrictMode>

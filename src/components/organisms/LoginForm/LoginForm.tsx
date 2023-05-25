@@ -1,12 +1,12 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import LoginFormValues from '../../../types/formTypes';
+import { LoginFormValues } from '../../../types/formTypes';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
 import * as Styled from './LoginForm.styled';
+import Link from '../../atoms/Link/Link';
+import routes from '../../../routing/routes';
 
 type LoginFormProps = {
   onSubmit: SubmitHandler<LoginFormValues>;
@@ -43,13 +43,13 @@ const LoginForm = ({ onSubmit, error }: LoginFormProps) => {
           error={!!errors.password}
           helperText={errors?.password?.message?.toString()}
         />
-        {error && <ErrorMessage msg="Nieprawidłowy login lub hasło" />}
+        {error && <ErrorMessage msg="Nieprawidłowy e-mail lub hasło" />}
         <Button type="submit" size="large" fullWidth>
           Zaloguj się
         </Button>
       </Styled.FormBox>
-      <Link href="#">Zapomniałeś hasła?</Link>
-      <Link href="#">Nie masz konta? Zarejestruj się</Link>
+      <Link to={routes.resetPassword}>Zapomniałeś hasła?</Link>
+      <Link to={routes.register}>Nie masz konta? Zarejestruj się</Link>
     </Styled.LoginBox>
   );
 };

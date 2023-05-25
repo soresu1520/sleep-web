@@ -1,6 +1,8 @@
-type LoginFormValues = {
+export type LoginFormValues = {
   email: string;
   password: string;
 };
 
-export default LoginFormValues;
+export type ResetFormValues = {
+  email: string;
+};

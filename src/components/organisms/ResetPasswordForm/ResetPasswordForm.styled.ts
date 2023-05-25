@@ -1,22 +1,21 @@
 import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
-export const ContentBox = styled(Box)({
-  alignItems: 'center',
-  display: 'flex',
-  gap: '5rem',
-  justifyContent: 'center',
-  marginTop: '7rem',
-  width: '100%',
-});
-
-export const ImageBox = styled(Box)({
+export const ResetBox = styled(Box)({
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center',
+  width: '22rem',
 });
 
-export const Image = styled('img')({
-  height: '24rem',
-  width: 'auto',
+export const FormBox = styled(Box)({
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  margin: '2rem 0',
+  width: '20rem',
 });
+
+export default {};
