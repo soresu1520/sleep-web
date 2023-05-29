@@ -9,6 +9,9 @@ import PrivateRoutes from './routing/PrivateRoutes';
 import PublicRoutes from './routing/PublicRoutes';
 import RegisterPage from './components/pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage/ResetPasswordPage';
+import AddPatientPage from './components/pages/AddPatientPage/AddPatientPage';
+import ChangePasswordPage from './components/pages/ChangePasswordPage/ChangePasswordPage';
+import NotFoundPage from './components/pages/NotFoundPage/NotFoundPage';
 
 const App = () => (
   <CssBaseline>
@@ -16,12 +19,15 @@ const App = () => (
     <Routes>
       <Route element={<PrivateRoutes />}>
         <Route path={routes.dashboard} element={<DashboardPage />} />
+        <Route path={routes.changePassword} element={<ChangePasswordPage />} />
+        <Route path={routes.addPatient} element={<AddPatientPage />} />
       </Route>
       <Route element={<PublicRoutes />}>
         <Route path={routes.login} element={<LoginPage />} />
         <Route path={routes.register} element={<RegisterPage />} />
         <Route path={routes.resetPassword} element={<ResetPasswordPage />} />
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     <Footer />
   </CssBaseline>

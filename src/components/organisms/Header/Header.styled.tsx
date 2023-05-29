@@ -20,5 +20,6 @@ export const FlexToolbar = styled(Toolbar, {
 }));
 
 export const LogoBox = styled(Box)({
+  cursor: 'pointer',
   display: 'flex',
 });
