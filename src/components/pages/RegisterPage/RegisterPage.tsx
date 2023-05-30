@@ -8,7 +8,7 @@ import AuthTemplate from '../../templates/AuthTemplate/AuthTemplate';
 import { RegisterFormValues } from '../../../types/formTypes';
 import routes from '../../../routing/routes';
 import { addDoctor } from '../../../firebase/firestoreUtils';
-import { Doctor } from '../../../types/roles';
+import { Doctor } from '../../../types/common';
 
 const RegisterPage = () => {
   const { signUp } = useAuth();
@@ -25,9 +25,8 @@ const RegisterPage = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
-        id: res.user.uid,
       };
-      await addDoctor(doctor);
+      await addDoctor(doctor, res.user.uid);
       setError(false);
       navigate(routes.dashboard);
     } catch {

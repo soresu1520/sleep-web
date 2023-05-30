@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ThemeProvider } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/pl';
 import { BrowserRouter } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import theme from './theme/muiTheme';
@@ -15,9 +18,11 @@ root.render(
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <SnackbarProvider autoHideDuration={3000}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pl">
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </LocalizationProvider>
         </SnackbarProvider>
       </ThemeProvider>
     </AuthProvider>
