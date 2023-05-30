@@ -3,7 +3,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import { useAuth } from '../../../contexts/authContext';
 import ResetPasswordForm from '../../organisms/ResetPasswordForm/ResetPasswordForm';
-import LoginTemplate from '../../templates/LoginTemplate/LoginTemplate';
+import AuthTemplate from '../../templates/AuthTemplate/AuthTemplate';
 import { ResetFormValues } from '../../../types/formTypes';
 
 const ResetPasswordPage = () => {
@@ -28,9 +28,9 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <LoginTemplate>
+    <AuthTemplate>
       <ResetPasswordForm onSubmit={onSubmit} error={error} />
-    </LoginTemplate>
+    </AuthTemplate>
   );
 };
 

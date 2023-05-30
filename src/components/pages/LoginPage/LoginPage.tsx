@@ -2,7 +2,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../organisms/LoginForm/LoginForm';
-import LoginTemplate from '../../templates/LoginTemplate/LoginTemplate';
+import AuthTemplate from '../../templates/AuthTemplate/AuthTemplate';
 import { useAuth } from '../../../contexts/authContext';
 import { LoginFormValues } from '../../../types/formTypes';
 import routes from '../../../routing/routes';
@@ -29,9 +29,9 @@ const LoginPage = () => {
   };
 
   return (
-    <LoginTemplate>
+    <AuthTemplate>
       <LoginForm onSubmit={onSubmit} error={error} />
-    </LoginTemplate>
+    </AuthTemplate>
   );
 };
 

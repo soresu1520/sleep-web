@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import Link from '@mui/material/Link';
 import graphic from '../../../assets/vecteezy_a-man-in-pajamas-is-having-a-sweet-dream-in-the-bedroom_5611444.jpg';
-import * as Styled from './LoginTemplate.styled';
+import * as Styled from './AuthTemplate.styled';
 
 const LoginTemplate = ({ children }: PropsWithChildren) => (
   <Styled.ContentBox>

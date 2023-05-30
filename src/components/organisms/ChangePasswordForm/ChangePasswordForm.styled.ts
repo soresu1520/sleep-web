@@ -1,12 +1,12 @@
 import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 
-export const ResetBox = styled(Box)({
+export const ContentBox = styled(Box)({
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  width: '22rem',
+  width: '25rem',
 });
 
 export const FormBox = styled(Box)({
@@ -15,5 +15,7 @@ export const FormBox = styled(Box)({
   flexDirection: 'column',
   gap: '1rem',
   margin: '2rem 0',
-  width: '20rem',
+  width: '22rem',
 });
+
+export default {};

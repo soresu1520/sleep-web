@@ -14,3 +14,8 @@ export type RegisterFormValues = {
   password: string;
   repeatPassword: string;
 };
+
+export type ChangePasswordFormValues = {
+  password: string;
+  repeatPassword: string;
+};

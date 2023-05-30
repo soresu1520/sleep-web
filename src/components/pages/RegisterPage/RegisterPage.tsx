@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitHandler } from 'react-hook-form';
 import { useAuth } from '../../../contexts/authContext';
 import RegisterForm from '../../organisms/RegisterForm/RegisterForm';
-import LoginTemplate from '../../templates/LoginTemplate/LoginTemplate';
+import AuthTemplate from '../../templates/AuthTemplate/AuthTemplate';
 import { RegisterFormValues } from '../../../types/formTypes';
 import routes from '../../../routing/routes';
 import { addDoctor } from '../../../firebase/firestoreUtils';
@@ -36,9 +36,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <LoginTemplate>
+    <AuthTemplate>
       <RegisterForm onSubmit={onSubmit} error={error} />
-    </LoginTemplate>
+    </AuthTemplate>
   );
 };
 
