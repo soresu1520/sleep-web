@@ -35,6 +35,18 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '8px',
+          '&.MuiButton-outlinedPrimary': {
+            '&:hover': {
+              backgroundColor: 'secondary',
+            },
+          },
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
         },
       },
     },

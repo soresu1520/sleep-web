@@ -8,6 +8,7 @@ export const FormBox = styled(Box)({
   flexDirection: 'column',
   gap: '1rem',
   justifyContent: 'center',
+  padding: '0 18%',
   width: '100%',
 });
 

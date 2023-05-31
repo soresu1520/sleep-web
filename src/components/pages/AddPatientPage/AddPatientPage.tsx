@@ -4,12 +4,12 @@ import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Timestamp } from 'firebase/firestore';
 import AddPatientForm from '../../organisms/AddPatientForm/AddPatientForm';
-import AddPatientTemplate from '../../templates/AddPatientTemplate/AddPatientTemplate';
 import { AddPatientFormValues } from '../../../types/formTypes';
 import { addPatient, checkIfPatientExists } from '../../../firebase/firestoreUtils';
 import { Patient } from '../../../types/common';
 import routes from '../../../routing/routes';
 import { useAuth } from '../../../contexts/authContext';
+import PageTemplate from '../../templates/PageTemplate/PageTemplate';
 
 const AddPatientPage = () => {
   const [error, setError] = useState<string | null>(null);
@@ -53,9 +53,9 @@ const AddPatientPage = () => {
   };
 
   return (
-    <AddPatientTemplate>
+    <PageTemplate>
       <AddPatientForm onSubmit={onSubmit} firebaseError={error} />
-    </AddPatientTemplate>
+    </PageTemplate>
   );
 };
 
