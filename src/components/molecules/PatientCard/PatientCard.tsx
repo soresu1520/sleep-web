@@ -1,35 +1,38 @@
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import Person2TwoToneIcon from '@mui/icons-material/Person2TwoTone';
-import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
-import Person2Icon from '@mui/icons-material/Person2';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CardActionArea from '@mui/material/CardActionArea';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import * as Styled from './PatientCard.styled';
+import calculateAge from './PatientCard.utils';
 
 type PatientCardProps = {
+  id: string;
   name: string;
-  age: number;
+  dateOfBirth: Date;
   diagnosis: string;
 };
 
-const PatientCard = () => (
-  <Card variant="outlined" sx={{ maxWidth: 345 }}>
-    <CardActionArea>
-      <CardMedia component="div">
-        <Person2Icon color="secondary" sx={{ fontSize: '10rem' }} />
-      </CardMedia>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-          across all continents except Antarctica
-        </Typography>
-      </CardContent>
-    </CardActionArea>
+// cant have card action, do your own
+const PatientCard = ({ id, name, dateOfBirth, diagnosis }: PatientCardProps) => (
+  <Card sx={{ width: 320 }}>
+    <Styled.CenteredCardMedia>
+      <Styled.BorderPersonIcon color="secondary" />
+    </Styled.CenteredCardMedia>
+    <Styled.CenteredCardContent>
+      <Typography variant="h5" color="primary" textAlign="center">
+        {name}
+      </Typography>
+      <Typography variant="body1" textAlign="center">
+        {calculateAge(dateOfBirth)} lat
+      </Typography>
+      <Tooltip title={diagnosis}>
+        <Styled.EllipsisTypography variant="body2" color="text.secondary" textAlign="center">
+          {diagnosis}
+        </Styled.EllipsisTypography>
+      </Tooltip>
+      <Button sx={{ marginTop: '0.5rem', width: '75%' }}>Szczegóły</Button>
+    </Styled.CenteredCardContent>
   </Card>
 );
 

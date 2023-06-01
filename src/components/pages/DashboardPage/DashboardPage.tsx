@@ -25,7 +25,12 @@ const DashboardPage = () => {
       >
         Dodaj pacjenta
       </Button>
-      <PatientCard />
+      <PatientCard
+        id="1"
+        name="Jane Doe"
+        diagnosis="insomnia"
+        dateOfBirth={new Date(1998, 4, 23)}
+      />
     </PageTemplate>
   );
 };
