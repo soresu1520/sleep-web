@@ -1,9 +1,15 @@
 import { styled } from '@mui/material';
+import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 // import Person2Icon from '@mui/icons-material/Person2';
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
+export const ActionCard = styled(Card)({
+  minWidth: '20rem',
+});
 
 export const CenteredCardMedia = styled(CardMedia)({
   alignItems: 'center',
@@ -35,4 +41,7 @@ export const EllipsisTypography = styled(Typography)({
   width: '100%',
 });
 
-export default {};
+export const CardButton = styled(Button)({
+  marginTop: '0.5rem',
+  width: '75%',
+});

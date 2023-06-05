@@ -21,3 +21,9 @@ export const checkIfPatientExists = async (email: string) => {
 export const addPatient = async (patient: Patient) => {
   await addDoc(collection(firestore, 'patients'), patient);
 };
+
+export const getPatients = async (doctorId: string) => {
+  const q = query(collection(firestore, 'patients'), where('doctorId', '==', doctorId));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot;
+};

@@ -7,3 +7,5 @@ export type Doctor = {
 };
 
 export type Patient = AddPatientFormValues & { doctorId: string };
+
+export type PatientWithId = Patient & { id: string };

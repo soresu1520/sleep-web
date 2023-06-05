@@ -5,6 +5,7 @@ const routes = {
   resetPassword: '/reset-password',
   changePassword: '/change-password',
   addPatient: '/add-patient',
+  patientDetails: '/patients/:id',
 };
 
 export default routes;
