@@ -5,11 +5,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import PatientCard from '../../molecules/PatientCard/PatientCard';
-import { PatientWithId } from '../../../types/common';
+import { Patient } from '../../../types/common';
 import * as Styled from './PatientsList.styled';
 
 type PatientsListProps = {
-  patientsList: PatientWithId[];
+  patientsList: Patient[];
   changeSortOption: (sortOption: string) => void;
   changeFilterOption: (filterOption: string | null) => void;
 };
@@ -89,7 +89,7 @@ const PatientsList = ({
             id={patient.id}
             name={`${patient.firstName} ${patient.lastName}`}
             diagnosis={patient.diagnosis}
-            dateOfBirth={new Date(1998, 4, 23)}
+            dateOfBirth={patient.birthDate.toDate()}
           />
         ))}
       </Styled.ListBox>

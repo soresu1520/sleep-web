@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Timestamp } from 'firebase/firestore';
+import short from 'short-uuid';
 import AddPatientForm from '../../organisms/AddPatientForm/AddPatientForm';
 import { AddPatientFormValues } from '../../../types/formTypes';
 import { addPatient, checkIfPatientExists } from '../../../firebase/firestoreUtils';
@@ -32,6 +33,7 @@ const AddPatientPage = () => {
           email,
           diagnosis,
           notes,
+          id: short.generate(),
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           doctorId: currentUser!.uid,
         };

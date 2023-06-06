@@ -13,6 +13,8 @@ import AddPatientPage from './components/pages/AddPatientPage/AddPatientPage';
 import ChangePasswordPage from './components/pages/ChangePasswordPage/ChangePasswordPage';
 import NotFoundPage from './components/pages/NotFoundPage/NotFoundPage';
 import PatientDetailsPage from './components/pages/PatientDetailsPage/PatientDetailsPage';
+import PatientPageTemplate from './components/templates/PatientPageTemplate/PatientPageTemplate';
+import EditPatientPage from './components/pages/EditPatientPage/EditPatientPage';
 
 const App = () => (
   <CssBaseline>
@@ -22,7 +24,10 @@ const App = () => (
         <Route path={routes.dashboard} element={<DashboardPage />} />
         <Route path={routes.changePassword} element={<ChangePasswordPage />} />
         <Route path={routes.addPatient} element={<AddPatientPage />} />
-        <Route path={routes.patientDetails} element={<PatientDetailsPage />} />
+        <Route path={routes.editPatient} element={<EditPatientPage />} />
+        <Route path={routes.patientDetails} element={<PatientPageTemplate />}>
+          <Route index element={<PatientDetailsPage />} />
+        </Route>
       </Route>
       <Route element={<PublicRoutes />}>
         <Route path={routes.login} element={<LoginPage />} />

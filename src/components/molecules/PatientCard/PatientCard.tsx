@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Styled from './PatientCard.styled';
 import calculateAge from './PatientCard.utils';
 import routes from '../../../routing/routes';
+import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 
 type PatientCardProps = {
   id: string;
@@ -23,7 +24,7 @@ const PatientCard = ({ id, name, dateOfBirth, diagnosis }: PatientCardProps) => 
   return (
     <Styled.ActionCard>
       <Styled.CenteredCardMedia>
-        <Styled.BorderPersonIcon color="secondary" />
+        <ProfileImage size={7} />
       </Styled.CenteredCardMedia>
       <Styled.CenteredCardContent>
         <Typography variant="h5" color="primary" textAlign="center">

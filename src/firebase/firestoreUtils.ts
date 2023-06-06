@@ -1,4 +1,13 @@
-import { collection, getDocs, query, setDoc, addDoc, doc, where } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  setDoc,
+  doc,
+  where,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { firestore } from './firebaseConfig';
 import { Doctor, Patient } from '../types/common';
 
@@ -19,11 +28,22 @@ export const checkIfPatientExists = async (email: string) => {
 };
 
 export const addPatient = async (patient: Patient) => {
-  await addDoc(collection(firestore, 'patients'), patient);
+  await setDoc(doc(firestore, 'patients', patient.id), patient);
 };
 
 export const getPatients = async (doctorId: string) => {
   const q = query(collection(firestore, 'patients'), where('doctorId', '==', doctorId));
   const querySnapshot = await getDocs(q);
   return querySnapshot;
+};
+
+export const getPatient = async (patientId: string) => {
+  const docRef = doc(firestore, 'patients', patientId);
+  const snapshot = await getDoc(docRef);
+  return snapshot;
+};
+
+export const updatePatient = async (patient: Partial<Patient>, patientId: string) => {
+  const docRef = doc(firestore, 'patients', patientId);
+  await updateDoc(docRef, patient);
 };

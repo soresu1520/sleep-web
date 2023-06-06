@@ -25,6 +25,7 @@ const RegisterPage = () => {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        id: res.user.uid,
       };
       await addDoctor(doctor, res.user.uid);
       setError(false);

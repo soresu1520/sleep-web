@@ -1,9 +1,6 @@
-import { PatientWithId } from '../../../types/common';
+import { Patient } from '../../../types/common';
 
-export const sortPatients = (
-  patientsList: PatientWithId[],
-  sortOption: string
-): PatientWithId[] => {
+export const sortPatients = (patientsList: Patient[], sortOption: string): Patient[] => {
   switch (sortOption) {
     case 'alphabetDesc':
       return patientsList.sort((a, b) =>

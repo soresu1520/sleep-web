@@ -9,26 +9,22 @@ import routes from '../../../routing/routes';
 import PatientsList from '../../organisms/PatientsList/PatientsList';
 import { useAuth } from '../../../contexts/authContext';
 import { getPatients } from '../../../firebase/firestoreUtils';
-import { Patient, PatientWithId } from '../../../types/common';
+import { Patient } from '../../../types/common';
 import { sortPatients } from './DashboardPage.utils';
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [unfilteredPatientsList, setUnfilteredPatientsList] = useState([] as PatientWithId[]);
-  const [patientsList, setPatientsList] = useState([] as PatientWithId[]);
+  const [unfilteredPatientsList, setUnfilteredPatientsList] = useState([] as Patient[]);
+  const [patientsList, setPatientsList] = useState([] as Patient[]);
   const [error, setError] = useState<string>('');
 
   const fetchPatients = async () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const snapshots = await getPatients(currentUser!.uid);
-      const patientsData = snapshots.docs.map(doc => {
-        const patient = doc.data() as Patient;
-        const patientWithId = { ...patient, id: doc.id };
-        return patientWithId;
-      });
+      const patientsData = snapshots.docs.map(doc => doc.data() as Patient);
       setUnfilteredPatientsList([...sortPatients(patientsData, 'alphabetDesc')]);
       setPatientsList([...sortPatients(patientsData, 'alphabetDesc')]);
       setLoading(false);

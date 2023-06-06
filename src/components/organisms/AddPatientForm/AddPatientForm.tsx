@@ -1,9 +1,10 @@
+/* eslint-disable react/require-default-props */
 import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import Link from '@mui/material/Link';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import graphic from '../../../assets/823_generated.jpg';
@@ -11,20 +12,25 @@ import * as Styled from './AddPatientForm.styled';
 import { emailRegex, peselRegex, phoneRegex } from '../../../utils/regex';
 import { AddPatientFormValues } from '../../../types/formTypes';
 import ErrorMessage from '../../atoms/ErrorMessage/ErrorMessage';
+import { Patient } from '../../../types/common';
 
 type AddPatientFormProps = {
   onSubmit: SubmitHandler<AddPatientFormValues>;
   firebaseError: string | null;
+  edit?: boolean;
+  patient?: Patient;
 };
 
-const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
+const AddPatientForm = ({ onSubmit, firebaseError, edit, patient }: AddPatientFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
   } = useForm<AddPatientFormValues>();
-  const [dateValue, setDateValue] = useState<Dayjs | null>(null);
+  const [dateValue, setDateValue] = useState<Dayjs | null>(
+    patient ? dayjs(patient.birthDate.toDate()) : null
+  );
 
   return (
     <Styled.FormBox component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -41,7 +47,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
         </Styled.ImageBox>
         <Styled.FormRows>
           <Typography variant="h5" color="primary" align="center" sx={{ marginBottom: '1rem' }}>
-            Dodaj nowego pacjenta
+            {!edit ? 'Dodaj nowego pacjenta' : 'Edytuj dane pacjenta'}
           </Typography>
           <Styled.Row>
             <Styled.FullWidthField
@@ -50,6 +56,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
               {...register('firstName', { required: 'Pole nie może być puste' })}
               error={!!errors.firstName}
               helperText={errors?.firstName?.message?.toString()}
+              defaultValue={patient ? patient.firstName : null}
             />
             <Styled.FullWidthField
               id="lastName"
@@ -57,6 +64,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
               {...register('lastName', { required: 'Pole nie może być puste' })}
               error={!!errors.lastName}
               helperText={errors?.lastName?.message?.toString()}
+              defaultValue={patient ? patient.lastName : null}
             />
           </Styled.Row>
           <Styled.Row>
@@ -72,6 +80,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
               })}
               error={!!errors.pesel}
               helperText={errors?.pesel?.message?.toString()}
+              defaultValue={patient ? patient.pesel : null}
             />
             <Controller
               name="birthDate"
@@ -110,6 +119,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
               })}
               error={!!errors.email}
               helperText={errors?.email?.message?.toString()}
+              defaultValue={patient ? patient.email : null}
             />
             <Styled.FullWidthField
               id="phone"
@@ -123,6 +133,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
               })}
               error={!!errors.phone}
               helperText={errors?.phone?.message?.toString()}
+              defaultValue={patient ? patient.phone : null}
             />
           </Styled.Row>
         </Styled.FormRows>
@@ -134,6 +145,7 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
         {...register('diagnosis', { required: 'Pole nie może być puste' })}
         error={!!errors.diagnosis}
         helperText={errors?.diagnosis?.message?.toString()}
+        defaultValue={patient ? patient.diagnosis : null}
       />
       <TextField
         id="notes"
@@ -142,10 +154,11 @@ const AddPatientForm = ({ onSubmit, firebaseError }: AddPatientFormProps) => {
         minRows={4}
         sx={{ width: 1 }}
         {...register('notes')}
+        defaultValue={patient ? patient.notes : null}
       />
       {firebaseError && <ErrorMessage msg={firebaseError} />}
       <Button type="submit" size="large" sx={{ width: '50%' }}>
-        Dodaj pacjenta
+        {!edit ? 'Dodaj nowego pacjenta' : 'Edytuj dane pacjenta'}
       </Button>
     </Styled.FormBox>
   );

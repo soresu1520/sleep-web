@@ -4,8 +4,7 @@ export type Doctor = {
   firstName: string;
   lastName: string;
   email: string;
+  id: string;
 };
 
-export type Patient = AddPatientFormValues & { doctorId: string };
-
-export type PatientWithId = Patient & { id: string };
+export type Patient = AddPatientFormValues & { doctorId: string; id: string };
