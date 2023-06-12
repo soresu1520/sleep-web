@@ -29,7 +29,6 @@ const EditPatientPage = () => {
           setError(null);
         }
       }
-      // eslint-disable-next-line no-empty
     } catch {
       setError('Wystąpił błąd');
     }

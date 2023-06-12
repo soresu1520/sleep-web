@@ -47,3 +47,15 @@ export const updatePatient = async (patient: Partial<Patient>, patientId: string
   const docRef = doc(firestore, 'patients', patientId);
   await updateDoc(docRef, patient);
 };
+
+export const getDiaries = async (patientId: string) => {
+  const q = query(collection(firestore, 'diary'), where('patientId', '==', patientId));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot;
+};
+
+export const getSmartwatchStudies = async (patientId: string) => {
+  const q = query(collection(firestore, 'smartwatch'), where('patientId', '==', patientId));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot;
+};

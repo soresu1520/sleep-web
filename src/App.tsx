@@ -15,22 +15,26 @@ import NotFoundPage from './components/pages/NotFoundPage/NotFoundPage';
 import PatientDetailsPage from './components/pages/PatientDetailsPage/PatientDetailsPage';
 import PatientPageTemplate from './components/templates/PatientPageTemplate/PatientPageTemplate';
 import EditPatientPage from './components/pages/EditPatientPage/EditPatientPage';
+import StatisticsPage from './components/pages/SatatisticsPage/StatisticsPage';
+import StudyDetailsPage from './components/pages/StudyDetailsPage/StudyDetailsPage';
 
 const App = () => (
   <CssBaseline>
     <Header />
     <Routes>
       <Route element={<PrivateRoutes />}>
-        <Route path={routes.dashboard} element={<DashboardPage />} />
+        <Route index path={routes.dashboard} element={<DashboardPage />} />
         <Route path={routes.changePassword} element={<ChangePasswordPage />} />
         <Route path={routes.addPatient} element={<AddPatientPage />} />
         <Route path={routes.editPatient} element={<EditPatientPage />} />
         <Route path={routes.patientDetails} element={<PatientPageTemplate />}>
           <Route index element={<PatientDetailsPage />} />
+          <Route path={routes.statistics} element={<StatisticsPage />} />
+          <Route path={routes.studyDetails} element={<StudyDetailsPage />} />
         </Route>
       </Route>
       <Route element={<PublicRoutes />}>
-        <Route path={routes.login} element={<LoginPage />} />
+        <Route index path={routes.login} element={<LoginPage />} />
         <Route path={routes.register} element={<RegisterPage />} />
         <Route path={routes.resetPassword} element={<ResetPasswordPage />} />
       </Route>

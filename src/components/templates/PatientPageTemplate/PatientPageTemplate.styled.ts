@@ -5,6 +5,7 @@ export const MainBox = styled(Box)({
   alignItems: 'start',
   display: 'flex',
   flexDirection: 'row',
+  gap: '5rem',
   justifyContent: 'space-between',
   width: '100%',
 });
@@ -12,6 +13,7 @@ export const MainBox = styled(Box)({
 export const ContentBox = styled(Box)({
   alignItems: 'center',
   display: 'flex',
+  flex: 1,
   flexDirection: 'column',
   justifyContent: 'center',
 });
