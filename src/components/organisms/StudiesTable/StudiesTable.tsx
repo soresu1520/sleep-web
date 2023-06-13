@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -18,7 +18,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WatchIcon from '@mui/icons-material/Watch';
 import Button from '@mui/material/Button';
-import { getNewSelectedItems, isSelected, getRowsOnPage, getStudyUrl } from './StudiesTable.utils';
+import {
+  getNewSelectedItems,
+  isSelected,
+  getRowsOnPage,
+  getStudyUrl,
+  formatDate,
+} from './StudiesTable.utils';
 import { StudiesTableProps, Order, TableData } from './StudiesTable.types';
 import * as Styled from './StudiesTable.styled';
 import DeleteDialog from '../../molecules/DeleteDialog/DeleteDialog';
@@ -28,11 +34,13 @@ const StudiesTable = ({ tableData }: StudiesTableProps) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [order, setOrder] = useState<Order>('asc');
-  const [visibleRows, setVisibleRows] = useState(
-    getRowsOnPage(tableData, page, rowsPerPage, order)
-  );
+  const [visibleRows, setVisibleRows] = useState<TableData[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setVisibleRows(getRowsOnPage(tableData, page, rowsPerPage, order));
+  }, [tableData]);
 
   const onSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -114,7 +122,7 @@ const StudiesTable = ({ tableData }: StudiesTableProps) => {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.date}
+                    key={formatDate(row.date)}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -122,7 +130,7 @@ const StudiesTable = ({ tableData }: StudiesTableProps) => {
                       <Checkbox color="primary" checked={isItemSelected} />
                     </TableCell>
                     <TableCell component="th" scope="row" padding="normal">
-                      {row.date}
+                      {formatDate(row.date)}
                     </TableCell>
                     <TableCell align="right">
                       <Tooltip title={row.diary ? 'Wypełniony dziennik snu' : 'Brak dziennika snu'}>

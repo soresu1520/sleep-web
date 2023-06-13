@@ -6,8 +6,20 @@ export const ActionRow = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  margin: '2rem 0 1rem',
+  margin: '1rem 0',
   width: '100%',
 });
 
-export default {};
+export const FilterBox = styled(Box)({
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '1rem',
+});
+
+export const FallbackBox = styled(Box)({
+  alignItems: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '3rem',
+});

@@ -1,7 +1,7 @@
 export type TableData = {
   diaryId?: string;
   smartwatchId?: string;
-  date: string;
+  date: Date;
   diary: boolean;
   smartwatch: boolean;
 };

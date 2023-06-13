@@ -1,108 +1,115 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { DocumentData } from 'firebase/firestore';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Dayjs } from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import StudiesTable from '../../organisms/StudiesTable/StudiesTable';
 import * as Styled from './PatientDetailsPage.styled';
 import { TableData } from '../../organisms/StudiesTable/StudiesTable.types';
 import { getDiaries, getSmartwatchStudies } from '../../../firebase/firestoreUtils';
-
-const tempRows: TableData[] = [
-  { diaryId: '1', smartwatchId: '1', date: '23.05.2023', diary: true, smartwatch: true },
-  { diaryId: '2', date: '25.05.2023', diary: true, smartwatch: false },
-  { smartwatchId: '3', date: '24.05.2023', diary: false, smartwatch: true },
-  { smartwatchId: '4', date: '26.05.2023', diary: false, smartwatch: true },
-  { diaryId: '5', smartwatchId: '5', date: '27.05.2023', diary: true, smartwatch: true },
-  { diaryId: '6', date: '28.05.2023', diary: true, smartwatch: false },
-];
+import {
+  filterByDate,
+  mapDiaryDocuments,
+  mapSmartwatchDocuments,
+  createTableData,
+} from './PatientDetailsPage.utils';
+import routes from '../../../routing/routes';
 
 const PatientDetailsPage = () => {
   const { id } = useParams();
-  const [diaries, setDiaries] = useState<DocumentData[]>();
-  const [smartwatchStudies, setSmartwatchStudies] = useState<DocumentData[]>();
+  const [startDate, setStartDate] = useState<Dayjs | null>(null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [tableData, setTableData] = useState<TableData[]>();
-
-  const fetchDiaries = async () => {
-    try {
-      if (id) {
-        const snapshots = await getDiaries(id);
-        const diariesData = snapshots.docs.map(doc => {
-          const tableItem: TableData = {
-            diaryId: doc.data().id,
-            diary: true,
-            date: doc.data().date,
-            smartwatch: false,
-          };
-          return tableItem;
-        });
-        setDiaries(diariesData);
-        setTableData(diariesData);
-        // console.log(diariesData);
-      }
-      // eslint-disable-next-line no-empty
-    } catch {}
-  };
+  const [filteredTableData, setFilteredTableData] = useState<TableData[]>();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchSmartwatchStudies = async () => {
     try {
       if (id) {
-        const snapshots1 = await getDiaries(id);
-        const diariesData = snapshots1.docs.map(doc => {
-          const tableItem: TableData = {
-            diaryId: doc.data().id,
-            diary: true,
-            date: doc.data().date.toDate().toString(),
-            smartwatch: false,
-          };
-          return tableItem;
-        });
-        // console.log(diariesData);
+        const diarySnapshots = await getDiaries(id);
+        const diaryData = diarySnapshots.docs.map(mapDiaryDocuments);
 
-        const snapshots = await getSmartwatchStudies(id);
-        const smartwatchData = snapshots.docs.map(doc => {
-          const tableItem: TableData = {
-            smartwatchId: doc.data().id,
-            diary: false,
-            date: doc.data().date.toDate().toString(),
-            smartwatch: true,
-          };
-          return tableItem;
-        });
-        setSmartwatchStudies(smartwatchData);
-        // console.log(smartwatchData);
+        const smartwatchSnapshots = await getSmartwatchStudies(id);
+        const smartwatchData = smartwatchSnapshots.docs.map(mapSmartwatchDocuments);
 
-        const data = diariesData;
-        smartwatchData.forEach(item => {
-          const diaryIndex = data.findIndex(item2 => item2.date === item.date);
-          console.log(diaryIndex);
-          if (diaryIndex > -1) {
-            data[diaryIndex].smartwatch = true;
-            data[diaryIndex].smartwatchId = item.smartwatchId;
-          } else {
-            console.log('else');
-            data.push(item);
-          }
-        });
-        console.log(data);
+        const data = createTableData(diaryData, smartwatchData);
+        setTableData(data);
+        setFilteredTableData(data);
+        setLoading(false);
       }
     } catch {
-      // eslint-disable-next-line no-empty
+      setError(true);
     }
   };
 
   useEffect(() => {
-    fetchDiaries();
     fetchSmartwatchStudies();
   }, []);
+
+  const onFilterClick = () => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const filteredData = filterByDate(tableData!, startDate, endDate);
+    setFilteredTableData(filteredData);
+  };
+
+  const onClearClick = () => {
+    setFilteredTableData(tableData);
+    setStartDate(null);
+    setEndDate(null);
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Typography variant="h5" color="primary">
         Lista badań
       </Typography>
-      <Styled.ActionRow>actions will go here</Styled.ActionRow>
-      <StudiesTable tableData={tempRows} />
+      {loading && (
+        <Styled.FallbackBox>
+          <CircularProgress />
+        </Styled.FallbackBox>
+      )}
+      {filteredTableData && tableData && (
+        <>
+          <Styled.ActionRow>
+            <Styled.FilterBox>
+              <DatePicker
+                label="Od"
+                disableFuture
+                value={startDate}
+                onChange={newValue => setStartDate(newValue)}
+                sx={{ width: '12rem' }}
+              />
+              <DatePicker
+                label="Do"
+                disableFuture
+                value={endDate}
+                onChange={newValue => setEndDate(newValue)}
+                sx={{ width: '12rem' }}
+              />
+              <Button onClick={onFilterClick}>Filtruj</Button>
+              {tableData.length > filteredTableData.length && (
+                <Button variant="outlined" onClick={onClearClick}>
+                  Wyczyść filtry
+                </Button>
+              )}
+            </Styled.FilterBox>
+            <Button onClick={() => navigate(routes.statistics)}>Statystyki</Button>
+          </Styled.ActionRow>
+          <StudiesTable tableData={filteredTableData} />
+        </>
+      )}
+      {error && (
+        <Styled.FallbackBox>
+          <Typography variant="h5" color="primary">
+            Wystapił błąd
+          </Typography>
+        </Styled.FallbackBox>
+      )}
     </Box>
   );
 };

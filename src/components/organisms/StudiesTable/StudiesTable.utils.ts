@@ -1,12 +1,15 @@
+import dayjs from 'dayjs';
 import routes from '../../../routing/routes';
 import { TableData, Order } from './StudiesTable.types';
+
+export const formatDate = (date: Date): string => dayjs(date.toString()).format('DD.MM.YYYY');
 
 export const sortStudies = (list: TableData[], sortOption: Order): TableData[] => {
   switch (sortOption) {
     case 'desc':
-      return list.sort((a, b) => a.date.toString().localeCompare(b.date.toString()));
+      return list.sort((a, b) => formatDate(a.date).localeCompare(formatDate(b.date)));
     case 'asc':
-      return list.sort((a, b) => b.date.toString().localeCompare(a.date.toString()));
+      return list.sort((a, b) => formatDate(b.date).localeCompare(formatDate(a.date)));
     default:
       return list;
   }
