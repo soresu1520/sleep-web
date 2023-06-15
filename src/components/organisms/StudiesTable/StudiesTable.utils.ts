@@ -54,7 +54,9 @@ export const getStudyUrl = (row: TableData) => {
     return routes.studyDetails.replace(':diaryId?', row.diaryId).replace(':smartwatchId?', '');
   }
   if (row.smartwatchId) {
-    return routes.studyDetails.replace(':smartwatchId?', row.smartwatchId).replace(':diaryId?', '');
+    return routes.studyDetails
+      .replace(':smartwatchId?', row.smartwatchId)
+      .replace(':diaryId?/', '');
   }
-  return routes.studyDetails.replace(':smartwatchId?', '').replace(':diaryId?', '');
+  return routes.studyDetails.replace(':smartwatchId?', '').replace(':diaryId?/', '');
 };

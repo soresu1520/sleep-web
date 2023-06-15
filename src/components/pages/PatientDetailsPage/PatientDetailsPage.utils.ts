@@ -27,7 +27,7 @@ export const mapDiaryDocuments = (doc: DocumentData): TableData => {
   const item: TableData = {
     diaryId: doc.data().id,
     diary: true,
-    date: doc.data().date.toDate(),
+    date: doc.data().timestamp.toDate(),
     smartwatch: false,
   };
   return item;

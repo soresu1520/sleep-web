@@ -19,7 +19,7 @@ export const calculateDiaryTimeDiff = (time1: string, time2: string): number => 
 
 export const getDiaryTimeDiff = (time1: string, time2: string): string => {
   const diff = calculateDiaryTimeDiff(time1, time2);
-  const hours = Math.round(diff / 60);
+  const hours = Math.floor(diff / 60);
   const minutes = diff - 60 * hours;
   return `${hours} h ${minutes} min`;
 };

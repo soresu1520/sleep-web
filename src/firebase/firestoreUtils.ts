@@ -49,7 +49,7 @@ export const updatePatient = async (patient: Partial<Patient>, patientId: string
 };
 
 export const getDiaries = async (patientId: string) => {
-  const q = query(collection(firestore, 'diary'), where('patientId', '==', patientId));
+  const q = query(collection(firestore, 'sleepdiary'), where('patientId', '==', patientId));
   const querySnapshot = await getDocs(q);
   return querySnapshot;
 };
@@ -58,4 +58,10 @@ export const getSmartwatchStudies = async (patientId: string) => {
   const q = query(collection(firestore, 'smartwatch'), where('patientId', '==', patientId));
   const querySnapshot = await getDocs(q);
   return querySnapshot;
+};
+
+export const getDiary = async (id: string) => {
+  const docRef = doc(firestore, 'sleepdiary', id);
+  const snapshot = await getDoc(docRef);
+  return snapshot;
 };

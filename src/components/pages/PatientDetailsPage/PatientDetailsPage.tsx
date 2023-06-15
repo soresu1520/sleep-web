@@ -40,11 +40,11 @@ const PatientDetailsPage = () => {
         const data = createTableData(diaryData, smartwatchData);
         setTableData(data);
         setFilteredTableData(data);
-        setLoading(false);
       }
     } catch {
       setError(true);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
