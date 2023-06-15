@@ -11,8 +11,8 @@ import { SleepDiary } from '../../../types/databaseTypes';
 import { getDiaries } from '../../../firebase/firestoreUtils';
 import * as Styled from './StatisticsPage.styled';
 import StatisticsDetails from '../../organisms/StatisticsDetails/StatisticsDetails';
-import { filterStudies } from './StatisticsPage.utils';
-import { SleepDiaryStatistics } from '../../organisms/StatisticsDetails/StatisticsDetails.types';
+import { filterStudies, getDiaryStatistics, initialDiaryStatistics } from './StatisticsPage.utils';
+import { SleepDiaryStatistics } from './StatisticsPage.types';
 
 export const tempAnswers: SleepDiaryStatistics = {
   sleepTime: '7 h 0 min',
@@ -30,6 +30,7 @@ const StatisticsPage = () => {
   const [diary, setDiary] = useState<SleepDiary[]>();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [diaryStatistics, setDiaryStatistics] = useState(initialDiaryStatistics);
 
   const fetchData = async () => {
     if (id) {
@@ -51,7 +52,10 @@ const StatisticsPage = () => {
 
   const onFilterClick = () => {
     if (unfilteredDiary) {
+      const filteredDiary = filterStudies(unfilteredDiary, startDate, endDate) as SleepDiary[];
       setDiary(filterStudies(unfilteredDiary, startDate, endDate) as SleepDiary[]);
+      const diaryStats = getDiaryStatistics(filteredDiary);
+      setDiaryStatistics(diaryStats);
     }
   };
 
@@ -85,7 +89,7 @@ const StatisticsPage = () => {
             <Button onClick={onFilterClick}>Pokaż statystyki</Button>
           </Styled.RowBox>
           <div style={{ border: '1px solid red', marginTop: '2rem' }}>chart</div>
-          <StatisticsDetails sleepDiary={diary!} />
+          <StatisticsDetails diaryStatistics={diaryStatistics} />
         </>
       )}
       {error && (

@@ -17,11 +17,15 @@ export const calculateDiaryTimeDiff = (time1: string, time2: string): number => 
   return diff;
 };
 
+export const getDiffHoursMinutes = (diff: number): string => {
+  const hours = Math.floor(diff / 60);
+  const minutes = Math.floor(diff - 60 * hours);
+  return `${hours} h ${minutes} min`;
+};
+
 export const getDiaryTimeDiff = (time1: string, time2: string): string => {
   const diff = calculateDiaryTimeDiff(time1, time2);
-  const hours = Math.floor(diff / 60);
-  const minutes = diff - 60 * hours;
-  return `${hours} h ${minutes} min`;
+  return getDiffHoursMinutes(diff);
 };
 
 export const calculateDiarySleepEfficiency = (
