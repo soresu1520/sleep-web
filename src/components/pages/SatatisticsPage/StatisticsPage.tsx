@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Dayjs } from 'dayjs';
@@ -11,6 +12,15 @@ import { getDiaries } from '../../../firebase/firestoreUtils';
 import * as Styled from './StatisticsPage.styled';
 import StatisticsDetails from '../../organisms/StatisticsDetails/StatisticsDetails';
 import { filterStudies } from './StatisticsPage.utils';
+import { SleepDiaryStatistics } from '../../organisms/StatisticsDetails/StatisticsDetails.types';
+
+export const tempAnswers: SleepDiaryStatistics = {
+  sleepTime: '7 h 0 min',
+  sleepBed: '8 h 0 min',
+  sleepEfficiency: '98%',
+  sleepLatency: '10 min',
+  sleepQuality: 'Przeciętna',
+};
 
 const StatisticsPage = () => {
   const { id } = useParams();
@@ -75,7 +85,7 @@ const StatisticsPage = () => {
             <Button onClick={onFilterClick}>Pokaż statystyki</Button>
           </Styled.RowBox>
           <div style={{ border: '1px solid red', marginTop: '2rem' }}>chart</div>
-          <StatisticsDetails />
+          <StatisticsDetails sleepDiary={diary!} />
         </>
       )}
       {error && (
