@@ -8,6 +8,7 @@ export type TableData = {
 
 export type StudiesTableProps = {
   tableData: TableData[];
+  handleDelete: (selected: TableData[]) => void;
 };
 
 export type Order = 'asc' | 'desc';

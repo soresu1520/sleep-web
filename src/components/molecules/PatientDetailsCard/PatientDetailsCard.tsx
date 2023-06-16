@@ -1,20 +1,50 @@
+import { useState } from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 import * as Styled from './PatientDetailsCard.styled';
 import ProfileImage from '../../atoms/ProfileImage/ProfileImage';
 import { Patient } from '../../../types/common';
 import routes from '../../../routing/routes';
+import DeleteDialog from '../DeleteDialog/DeleteDialog';
+import { deletePatient } from '../../../firebase/firestoreUtils';
 
 const PatientDetailsCard = ({ patient }: { patient: Patient }) => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const navigateToEditForm = (patientId: string) => {
     const url = routes.editPatient.replace(':id', patientId);
     navigate(url);
+  };
+
+  const onDelete = async () => {
+    try {
+      await deletePatient(patient.id);
+      navigate(routes.dashboard);
+      enqueueSnackbar('Usunięto pacjenta', {
+        variant: 'success',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom',
+        },
+      });
+    } catch {
+      enqueueSnackbar('Wystąpił błąd', {
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom',
+        },
+      });
+    }
+    setOpenDialog(false);
   };
 
   return (
@@ -63,11 +93,22 @@ const PatientDetailsCard = ({ patient }: { patient: Patient }) => {
         <Typography variant="body1">{patient.notes}</Typography>
       </CardContent>
       <Styled.EditBox>
+        <Button variant="text" color="error" onClick={() => setOpenDialog(true)}>
+          <DeleteIcon color="error" />
+          Usuń
+        </Button>
         <Button variant="text" color="primary" onClick={() => navigateToEditForm(patient.id)}>
           <EditIcon color="primary" />
           Edytuj
         </Button>
       </Styled.EditBox>
+      <DeleteDialog
+        open={openDialog}
+        handleClose={() => setOpenDialog(false)}
+        handleClick={onDelete}
+        text="Usunięcie pacjenta jest NIEODWRACALNE"
+        title={`Czy chcesz usunąć pacjenta ${patient.firstName} ${patient.lastName}?`}
+      />
     </Styled.DetailsCard>
   );
 };

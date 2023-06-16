@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WatchIcon from '@mui/icons-material/Watch';
 import Button from '@mui/material/Button';
+import { useSnackbar } from 'notistack';
 import {
   getNewSelectedItems,
   isSelected,
@@ -28,8 +29,9 @@ import {
 import { StudiesTableProps, Order, TableData } from './StudiesTable.types';
 import * as Styled from './StudiesTable.styled';
 import DeleteDialog from '../../molecules/DeleteDialog/DeleteDialog';
+import { deleteStudies } from '../../../firebase/firestoreUtils';
 
-const StudiesTable = ({ tableData }: StudiesTableProps) => {
+const StudiesTable = ({ tableData, handleDelete }: StudiesTableProps) => {
   const [selected, setSelected] = useState<TableData[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -37,6 +39,7 @@ const StudiesTable = ({ tableData }: StudiesTableProps) => {
   const [visibleRows, setVisibleRows] = useState<TableData[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setVisibleRows(getRowsOnPage(tableData, page, rowsPerPage, order));
@@ -73,6 +76,30 @@ const StudiesTable = ({ tableData }: StudiesTableProps) => {
     const isAsc = order === 'asc' ? 'desc' : 'asc';
     setOrder(isAsc);
     setVisibleRows(getRowsOnPage(tableData, page, rowsPerPage, isAsc));
+  };
+
+  const onDeleteClick = async () => {
+    try {
+      await deleteStudies(selected);
+      handleDelete(selected);
+      setSelected([]);
+      setOpenDialog(false);
+      enqueueSnackbar('Usunięto badania', {
+        variant: 'success',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom',
+        },
+      });
+    } catch {
+      enqueueSnackbar('Wystąpił błąd', {
+        variant: 'error',
+        anchorOrigin: {
+          horizontal: 'center',
+          vertical: 'bottom',
+        },
+      });
+    }
   };
 
   return (
@@ -189,7 +216,9 @@ const StudiesTable = ({ tableData }: StudiesTableProps) => {
       <DeleteDialog
         open={openDialog}
         handleClose={() => setOpenDialog(false)}
-        selected={selected}
+        handleClick={onDeleteClick}
+        text="Usunięcie badań jest nieodwracalne"
+        title={`Czy chcesz usunąć te badania (${selected.length})?`}
       />
     </Box>
   );

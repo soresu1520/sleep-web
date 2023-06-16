@@ -57,6 +57,7 @@
       }
     ],
     "import/no-extraneous-dependencies": ["off"],
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

@@ -16,8 +16,8 @@ const DashboardPage = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [unfilteredPatientsList, setUnfilteredPatientsList] = useState([] as Patient[]);
-  const [patientsList, setPatientsList] = useState([] as Patient[]);
+  const [unfilteredPatientsList, setUnfilteredPatientsList] = useState<Patient[]>();
+  const [patientsList, setPatientsList] = useState<Patient[]>();
   const [error, setError] = useState<string>('');
 
   const fetchPatients = async () => {
@@ -38,13 +38,13 @@ const DashboardPage = () => {
   }, []);
 
   const changeSortOption = (sortOption: string): void => {
-    setUnfilteredPatientsList([...sortPatients(unfilteredPatientsList, sortOption)]);
-    setPatientsList([...sortPatients(patientsList, sortOption)]);
+    setUnfilteredPatientsList([...sortPatients(unfilteredPatientsList!, sortOption)]);
+    setPatientsList([...sortPatients(patientsList!, sortOption)]);
   };
 
   const changeFilterOption = (filterOption: string | null): void => {
     if (filterOption !== null) {
-      const filteredPatients = unfilteredPatientsList.filter(patient =>
+      const filteredPatients = unfilteredPatientsList!.filter(patient =>
         `${patient.firstName} ${patient.lastName}`.includes(filterOption)
       );
       setPatientsList(filteredPatients);

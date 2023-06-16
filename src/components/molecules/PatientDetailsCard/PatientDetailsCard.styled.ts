@@ -23,5 +23,6 @@ export const PersonIcon = styled(Person2RoundedIcon)({
 
 export const EditBox = styled(Box)({
   display: 'flex',
-  justifyContent: 'end',
+  justifyContent: 'space-between',
+  marginTop: '0.5rem',
 });

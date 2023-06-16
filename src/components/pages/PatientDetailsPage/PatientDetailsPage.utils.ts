@@ -59,3 +59,6 @@ export const createTableData = (
   });
   return data;
 };
+
+export const filterDeletedData = (data: TableData[], dataToDelete: TableData[]) =>
+  data.filter(x => !dataToDelete.includes(x));

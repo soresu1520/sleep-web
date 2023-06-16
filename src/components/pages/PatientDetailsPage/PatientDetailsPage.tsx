@@ -15,6 +15,7 @@ import {
   mapDiaryDocuments,
   mapSmartwatchDocuments,
   createTableData,
+  filterDeletedData,
 } from './PatientDetailsPage.utils';
 import routes from '../../../routing/routes';
 
@@ -63,6 +64,13 @@ const PatientDetailsPage = () => {
     setEndDate(null);
   };
 
+  const handleDelete = (selected: TableData[]) => {
+    const newData = filterDeletedData(tableData!, selected);
+    const newUnfilteredData = filterDeletedData(filteredTableData!, selected);
+    setFilteredTableData(newData);
+    setTableData(newUnfilteredData);
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <Typography variant="h5" color="primary">
@@ -100,7 +108,7 @@ const PatientDetailsPage = () => {
             </Styled.FilterBox>
             <Button onClick={() => navigate(routes.statistics)}>Statystyki</Button>
           </Styled.ActionRow>
-          <StudiesTable tableData={filteredTableData} />
+          <StudiesTable tableData={filteredTableData} handleDelete={handleDelete} />
         </>
       )}
       {error && (

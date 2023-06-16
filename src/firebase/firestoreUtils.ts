@@ -7,9 +7,12 @@ import {
   where,
   getDoc,
   updateDoc,
+  deleteDoc,
+  writeBatch,
 } from 'firebase/firestore';
 import { firestore } from './firebaseConfig';
 import { Doctor, Patient } from '../types/common';
+import { TableData } from '../components/organisms/StudiesTable/StudiesTable.types';
 
 export const checkIfDoctor = async (email: string) => {
   const q = query(collection(firestore, 'doctors'), where('email', '==', email));
@@ -64,4 +67,22 @@ export const getDiary = async (id: string) => {
   const docRef = doc(firestore, 'sleepdiary', id);
   const snapshot = await getDoc(docRef);
   return snapshot;
+};
+
+export const deletePatient = async (patientId: string) => {
+  const docRef = doc(firestore, 'patients', patientId);
+  await deleteDoc(docRef);
+};
+
+export const deleteStudies = async (studies: TableData[]) => {
+  const batch = writeBatch(firestore);
+  studies.forEach(study => {
+    if (study.diaryId) {
+      batch.delete(doc(firestore, 'sleepdiary', study.diaryId));
+    }
+    if (study.smartwatchId) {
+      batch.delete(doc(firestore, 'smartwatch', study.smartwatchId));
+    }
+  });
+  await batch.commit();
 };
