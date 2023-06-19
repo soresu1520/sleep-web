@@ -5,7 +5,7 @@ import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import Box from '@mui/material/Box';
 
 export const DetailsCard = styled(Card)({
-  width: '19rem',
+  width: '17rem',
 });
 
 export const CenteredCardMedia = styled(CardMedia)({

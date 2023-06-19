@@ -61,7 +61,7 @@ const StudyDetailsPage = () => {
             <Box sx={{ width: '35%' }}>
               {diary ? <DiaryDetails diary={diary} /> : <DetailsCardTemplate type="diary" noData />}
             </Box>
-            <Box sx={{ width: '60%' }}>
+            <Box sx={{ width: '62%' }}>
               {smartwatchStudy ? (
                 <SmartwatchDetails smartwatchStudy={smartwatchStudy} />
               ) : (

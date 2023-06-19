@@ -12,10 +12,11 @@ import {
   parseDesaturationTime,
 } from '../../../utils/smartwatchStats';
 import { getDiffHoursMinutes } from '../../../utils/diaryStats';
+import Hypnogram from '../../molecules/Hypnogram/Hypnogram';
 
 const SmartwatchDetails = ({ smartwatchStudy }: { smartwatchStudy: SmartwatchStudy }) => (
   <DetailsCardTemplate type="smartwatch">
-    <div style={{ border: '1px solid red' }}>Chart</div>
+    <Hypnogram sleepStages={smartwatchStudy.sleepStages} />
     <Typography variant="body1" color="primary" sx={{ marginTop: '1rem' }}>
       Czas snu
     </Typography>
