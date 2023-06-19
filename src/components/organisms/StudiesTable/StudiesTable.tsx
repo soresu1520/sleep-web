@@ -84,6 +84,7 @@ const StudiesTable = ({ tableData, handleDelete }: StudiesTableProps) => {
       handleDelete(selected);
       setSelected([]);
       setOpenDialog(false);
+      setPage(0);
       enqueueSnackbar('Usunięto badania', {
         variant: 'success',
         anchorOrigin: {

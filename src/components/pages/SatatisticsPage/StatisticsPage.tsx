@@ -7,11 +7,17 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
-import { SleepDiary } from '../../../types/databaseTypes';
-import { getDiaries } from '../../../firebase/firestoreUtils';
+import { SleepDiary, SmartwatchStudy } from '../../../types/databaseTypes';
+import { getDiaries, getSmartwatchStudies } from '../../../firebase/firestoreUtils';
 import * as Styled from './StatisticsPage.styled';
 import StatisticsDetails from '../../organisms/StatisticsDetails/StatisticsDetails';
-import { filterStudies, getDiaryStatistics, initialDiaryStatistics } from './StatisticsPage.utils';
+import {
+  filterStudies,
+  getDiaryStatistics,
+  getSmartwatchStatistics,
+  initialDiaryStatistics,
+  initialSmartwatchStatistics,
+} from './StatisticsPage.utils';
 import { SleepDiaryStatistics } from './StatisticsPage.types';
 
 export const tempAnswers: SleepDiaryStatistics = {
@@ -28,9 +34,13 @@ const StatisticsPage = () => {
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [unfilteredDiary, setUnfilteredDiary] = useState<SleepDiary[]>();
   const [diary, setDiary] = useState<SleepDiary[]>();
+  const [unfilteredSmartwatch, setUnfilteredSmartwatch] = useState<SmartwatchStudy[]>();
+  const [smartwatch, setSmartwatch] = useState<SmartwatchStudy[]>();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [diaryStatistics, setDiaryStatistics] = useState(initialDiaryStatistics);
+  const [smartwatchStatistics, setSmartwatchStatistics] = useState(initialSmartwatchStatistics);
+  const [noData, setNoData] = useState(false);
 
   const fetchData = async () => {
     if (id) {
@@ -39,6 +49,11 @@ const StatisticsPage = () => {
         const diaryData = diarySnapshots.docs.map(doc => doc.data() as SleepDiary);
         setUnfilteredDiary(diaryData);
         setDiary(diaryData);
+
+        const smartwatchSnapshots = await getSmartwatchStudies(id);
+        const smartwatchData = smartwatchSnapshots.docs.map(doc => doc.data() as SmartwatchStudy);
+        setUnfilteredSmartwatch(smartwatchData);
+        setSmartwatch(smartwatchData);
       } catch {
         setError(true);
       }
@@ -51,11 +66,40 @@ const StatisticsPage = () => {
   }, []);
 
   const onFilterClick = () => {
+    let isDiary = false;
+    let isSmartwatch = false;
+
     if (unfilteredDiary) {
       const filteredDiary = filterStudies(unfilteredDiary, startDate, endDate) as SleepDiary[];
-      setDiary(filterStudies(unfilteredDiary, startDate, endDate) as SleepDiary[]);
-      const diaryStats = getDiaryStatistics(filteredDiary);
-      setDiaryStatistics(diaryStats);
+      if (filteredDiary.length > 0) {
+        setDiary(filteredDiary);
+        const diaryStats = getDiaryStatistics(filteredDiary);
+        setDiaryStatistics(diaryStats);
+        isDiary = true;
+      } else {
+        setDiaryStatistics(initialDiaryStatistics);
+      }
+    }
+    if (unfilteredSmartwatch) {
+      const filteredSmartwach = filterStudies(
+        unfilteredSmartwatch,
+        startDate,
+        endDate
+      ) as SmartwatchStudy[];
+      if (filteredSmartwach.length > 0) {
+        setSmartwatch(filteredSmartwach);
+        const smartwatchStats = getSmartwatchStatistics(filteredSmartwach);
+        setSmartwatchStatistics(smartwatchStats);
+        isSmartwatch = true;
+      } else {
+        setSmartwatchStatistics(initialSmartwatchStatistics);
+      }
+    }
+
+    if (!isDiary && !isSmartwatch) {
+      setNoData(true);
+    } else {
+      setNoData(false);
     }
   };
 
@@ -88,8 +132,16 @@ const StatisticsPage = () => {
             />
             <Button onClick={onFilterClick}>Pokaż statystyki</Button>
           </Styled.RowBox>
+          {noData && (
+            <Typography variant="h6" color="primary" sx={{ marginTop: '1rem' }} align="center">
+              Brak danych z tego okresu
+            </Typography>
+          )}
           <div style={{ border: '1px solid red', marginTop: '2rem' }}>chart</div>
-          <StatisticsDetails diaryStatistics={diaryStatistics} />
+          <StatisticsDetails
+            diaryStatistics={diaryStatistics}
+            smartwatchStatistics={smartwatchStatistics}
+          />
         </>
       )}
       {error && (

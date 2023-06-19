@@ -17,7 +17,7 @@ const Header = () => {
           <Styled.LogoBox onClick={() => navigate(currentUser ? routes.dashboard : routes.login)}>
             <NightsStayIcon sx={{ fontSize: '2.8rem' }} color="primary" />
             <Typography variant="h4" color="primary">
-              Sleep lab
+              Sleep Lab
             </Typography>
           </Styled.LogoBox>
           {currentUser ? <AccountDropdown /> : null}

@@ -1,6 +1,20 @@
 import { SleepDiary, SmartwatchStudy } from '../../../types/databaseTypes';
 import { calculateDiaryTimeDiff, addMinutes, getDiffHoursMinutes } from '../../../utils/diaryStats';
-import { SleepDiaryStatistics, dateJS, IsDiaryGuard, SleepQuality } from './StatisticsPage.types';
+import {
+  calculateREMLatency,
+  calculateSleepTime,
+  calculateStageTime,
+  calculateWASO,
+  countWakes,
+  parseDesaturationTime,
+} from '../../../utils/smartwatchStats';
+import {
+  SleepDiaryStatistics,
+  dateJS,
+  IsDiaryGuard,
+  SleepQuality,
+  SmartwatchStudyStatistics,
+} from './StatisticsPage.types';
 
 export const initialDiaryStatistics: SleepDiaryStatistics = {
   sleepTime: '-',
@@ -8,6 +22,20 @@ export const initialDiaryStatistics: SleepDiaryStatistics = {
   sleepEfficiency: '-',
   sleepLatency: '-',
   sleepQuality: '-',
+};
+
+export const initialSmartwatchStatistics: SmartwatchStudyStatistics = {
+  sleepTime: '-',
+  wakeTime: '-',
+  lightSleepTime: '-',
+  deepSleepTime: '-',
+  remSleepTime: '-',
+  remLatency: '-',
+  waso: '-',
+  wakes: '-',
+  sleepEfficiency: '-',
+  saturation: '-',
+  desaturationTime: '-',
 };
 
 export const filterStudies = (
@@ -25,20 +53,20 @@ export const filterStudies = (
     }
     return studies.filter(
       item =>
-        item.timestamp.toDate() >= startDate.toDate() && item.timestamp.toDate() <= endDate.toDate()
+        item.entryDate.toDate() >= startDate.toDate() && item.entryDate.toDate() <= endDate.toDate()
     );
   }
   if (startDate) {
     if (IsDiaryGuard(studies)) {
       return studies.filter(item => item.timestamp.toDate() >= startDate.toDate());
     }
-    return studies.filter(item => item.timestamp.toDate() >= startDate.toDate());
+    return studies.filter(item => item.entryDate.toDate() >= startDate.toDate());
   }
   if (endDate) {
     if (IsDiaryGuard(studies)) {
       return studies.filter(item => item.timestamp.toDate() <= endDate.toDate());
     }
-    return studies.filter(item => item.timestamp.toDate() <= endDate.toDate());
+    return studies.filter(item => item.entryDate.toDate() <= endDate.toDate());
   }
   return studies;
 };
@@ -103,5 +131,51 @@ export const getDiaryStatistics = (diary: SleepDiary[]): SleepDiaryStatistics =>
     sleepLatency: `${sleepLatencyMean} min`,
     sleepQuality: switchQualityToString(sleepQualityMean),
   };
+  return stats;
+};
+
+export const getSmartwatchStatistics = (
+  smartwatch: SmartwatchStudy[]
+): SmartwatchStudyStatistics => {
+  let sleepTime = 0;
+  let wakeTime = 0;
+  let lightSleepTime = 0;
+  let deepSleepTime = 0;
+  let remSleepTime = 0;
+  let remLatency = 0;
+  let waso = 0;
+  let wakes = 0;
+  let saturation = 0;
+  let desaturationTime = 0;
+
+  smartwatch.forEach(item => {
+    sleepTime += calculateSleepTime(item.sleepStages);
+    wakeTime += calculateStageTime(item.sleepStages, '40001');
+    lightSleepTime += calculateStageTime(item.sleepStages, '40002');
+    deepSleepTime += calculateStageTime(item.sleepStages, '40003');
+    remSleepTime += calculateStageTime(item.sleepStages, '40004');
+    remLatency += calculateREMLatency(item.sleepStages);
+    waso += calculateWASO(item.sleepStages);
+    wakes += countWakes(item.sleepStages);
+    saturation += item.meanSaturation;
+    desaturationTime += item.desaturationTime;
+  });
+
+  const sleepEfficiencyMean = Math.round((sleepTime / 7 / ((sleepTime + wakeTime) / 7)) * 100);
+
+  const stats: SmartwatchStudyStatistics = {
+    sleepTime: getDiffHoursMinutes(sleepTime / smartwatch.length),
+    wakeTime: getDiffHoursMinutes(wakeTime / smartwatch.length),
+    lightSleepTime: getDiffHoursMinutes(lightSleepTime / smartwatch.length),
+    deepSleepTime: getDiffHoursMinutes(deepSleepTime / smartwatch.length),
+    remSleepTime: getDiffHoursMinutes(remSleepTime / smartwatch.length),
+    remLatency: getDiffHoursMinutes(remLatency / smartwatch.length),
+    waso: getDiffHoursMinutes(waso / smartwatch.length),
+    wakes: `${Math.round(wakes / smartwatch.length)}`,
+    sleepEfficiency: `${sleepEfficiencyMean}%`,
+    saturation: `${Math.round(saturation / smartwatch.length)}%`,
+    desaturationTime: parseDesaturationTime(desaturationTime / smartwatch.length),
+  };
+
   return stats;
 };

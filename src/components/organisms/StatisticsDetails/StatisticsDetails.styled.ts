@@ -22,7 +22,6 @@ export const SubtitleBox = styled(Box, {
   display: 'flex',
   gap: '0.5rem',
   width,
-  border: '1px solid red',
 }));
 
 export const StatisticsBox = styled(Box)({
@@ -33,5 +32,4 @@ export const StatisticsBox = styled(Box)({
 
 export const StatisticsColumn = styled(Box)({
   flexBasis: '32%',
-  border: '1px solid red',
 });

@@ -56,7 +56,7 @@ export const getStudyUrl = (row: TableData) => {
   if (row.smartwatchId) {
     return routes.studyDetails
       .replace(':smartwatchId?', row.smartwatchId)
-      .replace(':diaryId?/', '');
+      .replace(':diaryId?/', 'no-diary/');
   }
   return routes.studyDetails.replace(':smartwatchId?', '').replace(':diaryId?/', '');
 };

@@ -36,8 +36,6 @@ const PatientDetailsPage = () => {
         const diaryData = diarySnapshots.docs.map(mapDiaryDocuments);
 
         const smartwatchSnapshots = await getSmartwatchStudies(id);
-        const data2 = smartwatchSnapshots.docs.map(doc => doc.data());
-        console.log(data2);
         const smartwatchData = smartwatchSnapshots.docs.map(mapSmartwatchDocuments);
 
         const data = createTableData(diaryData, smartwatchData);
@@ -46,7 +44,6 @@ const PatientDetailsPage = () => {
       }
     } catch (erro) {
       setError(true);
-      console.log(erro);
     }
     setLoading(false);
   };

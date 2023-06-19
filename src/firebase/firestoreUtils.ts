@@ -69,6 +69,12 @@ export const getDiary = async (id: string) => {
   return snapshot;
 };
 
+export const getSmartwatchStudy = async (id: string) => {
+  const docRef = doc(firestore, 'smartwatch', id);
+  const snapshot = await getDoc(docRef);
+  return snapshot;
+};
+
 export const deletePatient = async (patientId: string) => {
   const docRef = doc(firestore, 'patients', patientId);
   await deleteDoc(docRef);

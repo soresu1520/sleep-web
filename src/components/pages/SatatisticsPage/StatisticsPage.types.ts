@@ -9,6 +9,20 @@ export type SleepDiaryStatistics = {
   sleepQuality: string;
 };
 
+export type SmartwatchStudyStatistics = {
+  sleepTime: string;
+  wakeTime: string;
+  lightSleepTime: string;
+  deepSleepTime: string;
+  remSleepTime: string;
+  remLatency: string;
+  waso: string;
+  wakes: string;
+  sleepEfficiency: string;
+  saturation: string;
+  desaturationTime: string;
+};
+
 export type dateJS = Dayjs | null;
 
 export const IsDiaryGuard = (list: SleepDiary[] | SmartwatchStudy[]): list is SleepDiary[] =>

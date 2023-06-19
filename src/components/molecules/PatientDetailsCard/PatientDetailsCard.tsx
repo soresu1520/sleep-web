@@ -73,7 +73,7 @@ const PatientDetailsCard = ({ patient }: { patient: Patient }) => {
         </Typography>
         <Typography variant="body1">
           <b>Data urodzenia:</b>{' '}
-          {patient.birthDate && dayjs(patient.birthDate.toDate().toString()).format('DD.MM.YYYY')}{' '}
+          {patient.birthDate && dayjs(patient.birthDate.toDate().toString()).format('DD.MM.YYYY')}
           r.
         </Typography>
         <Typography variant="body1">

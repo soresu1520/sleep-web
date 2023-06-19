@@ -24,7 +24,7 @@ const DiaryDetails = ({ diary }: { diary: any }) => (
       Czas snu
     </Typography>
     <Typography variant="body1">
-      {getDiaryTimeDiff(addMinutes(diary.q3, diary.q4), diary.q5)}
+      {getDiaryTimeDiff(addMinutes(diary.q3, +diary.q4), diary.q5)}
     </Typography>
     <Typography variant="body1" color="primary">
       Czas spędzony w łóżku
@@ -34,7 +34,8 @@ const DiaryDetails = ({ diary }: { diary: any }) => (
       Wydajność snu
     </Typography>
     <Typography variant="body1">
-      {calculateDiarySleepEfficiency(diary.q2, addMinutes(diary.q3, diary.q4), diary.q5, diary.q7)}%
+      {calculateDiarySleepEfficiency(diary.q2, addMinutes(diary.q3, +diary.q4), diary.q5, diary.q7)}
+      %
     </Typography>
   </DetailsCardTemplate>
 );
