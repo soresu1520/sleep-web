@@ -37,7 +37,7 @@ export const mapSmartwatchDocuments = (doc: DocumentData): TableData => {
   const item: TableData = {
     smartwatchId: doc.data().id,
     diary: false,
-    date: doc.data().date.toDate(),
+    date: doc.data().entryDate.toDate(),
     smartwatch: true,
   };
   return item;

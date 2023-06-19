@@ -46,7 +46,7 @@ const StudyDetailsPage = () => {
       {!loading && !error && (
         <>
           <Typography variant="h5" color="primary">
-            {diary && diary.dateEntry}
+            {diary && diary.entryDate}
           </Typography>
           <Styled.DetailsBox>
             <Box sx={{ width: '35%' }}>

@@ -12,6 +12,6 @@ export type SleepDiaryStatistics = {
 export type dateJS = Dayjs | null;
 
 export const IsDiaryGuard = (list: SleepDiary[] | SmartwatchStudy[]): list is SleepDiary[] =>
-  (list as SleepDiary[])[0].dateEntry !== undefined;
+  (list as SleepDiary[])[0].q1 !== undefined;
 
 export type SleepQuality = 'Bardzo zła' | 'Zła' | 'Przeciętna' | 'Dobra' | 'Bardzo dobra';

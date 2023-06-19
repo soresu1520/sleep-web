@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 
 export type SleepDiary = {
-  dateEntry: string;
+  entryDate: string;
   id: string;
   patientEmail: string;
   patientId: string;

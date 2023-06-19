@@ -7,9 +7,9 @@ export const formatDate = (date: Date): string => dayjs(date.toString()).format(
 export const sortStudies = (list: TableData[], sortOption: Order): TableData[] => {
   switch (sortOption) {
     case 'desc':
-      return list.sort((a, b) => formatDate(a.date).localeCompare(formatDate(b.date)));
+      return list.sort((a, b) => a.date.getTime() - b.date.getTime());
     case 'asc':
-      return list.sort((a, b) => formatDate(b.date).localeCompare(formatDate(a.date)));
+      return list.sort((a, b) => b.date.getTime() - a.date.getTime());
     default:
       return list;
   }
