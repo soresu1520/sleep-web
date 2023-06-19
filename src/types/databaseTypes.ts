@@ -3,7 +3,6 @@ import { Timestamp } from 'firebase/firestore';
 export type SleepDiary = {
   entryDate: string;
   id: string;
-  patientEmail: string;
   patientId: string;
   q1: string;
   q2: string;
@@ -29,7 +28,6 @@ export type SleepStage = {
 export type SmartwatchStudy = {
   entryDate: Timestamp;
   id: string;
-  patientEmail: string;
   patientId: string;
   minSaturation: number;
   meanSaturation: number;
