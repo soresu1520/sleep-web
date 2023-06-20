@@ -13,3 +13,9 @@ export const LoadingBox = styled(Box)({
   justifyContent: 'center',
   width: '100%',
 });
+
+export const ChartBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+});

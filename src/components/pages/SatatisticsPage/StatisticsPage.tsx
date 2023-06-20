@@ -19,6 +19,9 @@ import {
   initialSmartwatchStatistics,
 } from './StatisticsPage.utils';
 import { SleepDiaryStatistics } from './StatisticsPage.types';
+import StatisticsToggleButtons from '../../molecules/StatisticsToggleButtons/StatisticsToggleButtons';
+import { ChartType } from '../../molecules/StatisticsToggleButtons/StatisticsToggleButtons.types';
+import StatisticsChart from '../../molecules/StatisticsChart/StatisticsChart';
 
 export const tempAnswers: SleepDiaryStatistics = {
   sleepTime: '7 h 0 min',
@@ -41,6 +44,8 @@ const StatisticsPage = () => {
   const [diaryStatistics, setDiaryStatistics] = useState(initialDiaryStatistics);
   const [smartwatchStatistics, setSmartwatchStatistics] = useState(initialSmartwatchStatistics);
   const [noData, setNoData] = useState(false);
+  const [showChart, setShowChart] = useState(false);
+  const [chartType, setChartType] = useState<ChartType | null>(null);
 
   const fetchData = async () => {
     if (id) {
@@ -78,6 +83,7 @@ const StatisticsPage = () => {
         isDiary = true;
       } else {
         setDiaryStatistics(initialDiaryStatistics);
+        setDiary([]);
       }
     }
     if (unfilteredSmartwatch) {
@@ -93,14 +99,21 @@ const StatisticsPage = () => {
         isSmartwatch = true;
       } else {
         setSmartwatchStatistics(initialSmartwatchStatistics);
+        setSmartwatch([]);
       }
     }
 
     if (!isDiary && !isSmartwatch) {
       setNoData(true);
+      setShowChart(false);
     } else {
       setNoData(false);
+      setShowChart(true);
     }
+  };
+
+  const chooseChartType = (chart: ChartType) => {
+    setChartType(chart);
   };
 
   return (
@@ -137,7 +150,14 @@ const StatisticsPage = () => {
               Brak danych z tego okresu
             </Typography>
           )}
-          <div style={{ border: '1px solid red', marginTop: '2rem' }}>chart</div>
+          {diary && smartwatch && showChart && (
+            <Styled.ChartBox>
+              <StatisticsToggleButtons chooseChartType={chooseChartType} />
+              {chartType && (
+                <StatisticsChart chartType={chartType} diary={diary} smartwatch={smartwatch} />
+              )}
+            </Styled.ChartBox>
+          )}
           <StatisticsDetails
             diaryStatistics={diaryStatistics}
             smartwatchStatistics={smartwatchStatistics}

@@ -71,7 +71,7 @@ export const filterStudies = (
   return studies;
 };
 
-const switchQualityToNumber = (quality: SleepQuality): number => {
+export const switchQualityToNumber = (quality: SleepQuality): number => {
   switch (quality) {
     case 'Bardzo zła':
       return 1;
@@ -88,7 +88,7 @@ const switchQualityToNumber = (quality: SleepQuality): number => {
   }
 };
 
-const switchQualityToString = (quality: number): SleepQuality => {
+export const switchQualityToString = (quality: number): SleepQuality => {
   switch (quality) {
     case 1:
       return 'Bardzo zła';

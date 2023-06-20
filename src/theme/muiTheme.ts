@@ -53,6 +53,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        root: {
+          '& .MuiToggleButtonGroup-grouped': {
+            border: 0,
+            borderRadius: '0',
+            outline: '1px solid #182978',
+            color: '#182978',
+            padding: '0.5rem',
+          },
+        },
+      },
+    },
   },
 });
 
