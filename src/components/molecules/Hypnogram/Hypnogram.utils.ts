@@ -32,14 +32,6 @@ export const getStagesColors = (sleepStage: SleepStageType): HexColor => {
   }
 };
 
-export const generateHypnogramData = (sleepStages: SleepStage[]): number[][] => {
-  const hypnogramData: number[][] = [];
-  sleepStages.forEach(item => {
-    hypnogramData.push([item.startDate.seconds, changeStagesToNumeric(item.stage)]);
-  });
-  return hypnogramData;
-};
-
 export const generateHypnogramPoints = (sleepStages: SleepStage[]) => {
   const hypnogramPoints: HypnogramPoint[] = [];
   sleepStages.forEach(item => {
@@ -51,21 +43,6 @@ export const generateHypnogramPoints = (sleepStages: SleepStage[]) => {
     });
   });
   return hypnogramPoints;
-};
-
-export const getColors = (value: number): string => {
-  switch (value) {
-    case 4:
-      return '#FC6A03';
-    case 3:
-      return '#00FFFF';
-    case 2:
-      return '#1E90FF';
-    case 1:
-      return '#041E42';
-    default:
-      return '#FC6A03';
-  }
 };
 
 export const formatYLabels = (value: number): string => {
