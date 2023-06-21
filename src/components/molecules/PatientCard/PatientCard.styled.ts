@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 export const ActionCard = styled(Card)({
   boxShadow: '0px 3px 6px -2px rgba(0, 0, 0, 0.15)',
-  minWidth: '20rem',
+  minWidth: '17rem',
 });
 
 export const CenteredCardMedia = styled(CardMedia)({

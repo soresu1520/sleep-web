@@ -2,7 +2,7 @@ import { SleepStage, SleepStageType } from '../types/databaseTypes';
 
 export const parseDesaturationTime = (desTime: number): string => {
   const min = Math.floor(desTime / 60);
-  const sec = desTime - 60 * min;
+  const sec = Math.floor(desTime - 60 * min);
   return `${min} min ${sec} s`;
 };
 

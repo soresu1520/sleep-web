@@ -6,7 +6,7 @@ export const ContentBox = styled(Box)({
   display: 'flex',
   gap: '5rem',
   justifyContent: 'center',
-  marginTop: '7rem',
+  marginTop: '5rem',
   width: '100%',
 });
 
