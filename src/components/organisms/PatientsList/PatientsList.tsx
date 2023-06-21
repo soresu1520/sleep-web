@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -82,6 +83,11 @@ const PatientsList = ({
           )}
         />
       </Styled.SortSearchBox>
+      {patientsList.length === 0 && (
+        <Typography variant="h5" color="primary" textAlign="center" sx={{ marginTop: '3rem' }}>
+          Nie masz jeszcze pacjentów
+        </Typography>
+      )}
       <Styled.ListBox>
         {patientsList.map(patient => (
           <PatientCard
